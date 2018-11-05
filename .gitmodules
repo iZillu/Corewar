@@ -1,0 +1,3 @@
+[submodule "shared/libft"]
+	path = shared/libft
+	url = https://github.com/UnitedSalvatore/Libft.git
