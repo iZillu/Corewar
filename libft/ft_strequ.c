@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmuravch <hmuravch@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 11:02:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 18:14:02 by hmuravch         ###   ########.fr       */
+/*   Created: 2018/04/05 04:51:52 by hmuravch          #+#    #+#             */
+/*   Updated: 2018/08/20 06:35:20 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "libft.h"
 
-int			main(int argc, char **argv)
+int		ft_strequ(char const *s1, char const *s2)
 {
-	t_cw	*cw;
-
-	if (argc >= 2)
+	if (s1 && s2)
 	{
-		cw = initializer_cw();
-		parse_flags(argc--, argv++, cw);
-        // init_players();
-		// fill_map();
-		start_game(cw);
-
+		while (*s1 || *s2)
+			if (*s1++ != *s2++)
+				return (0);
+		return (1);
 	}
-	else
-		ft_printf("ERROR: No arguments");
 	return (0);
 }

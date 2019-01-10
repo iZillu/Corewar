@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   ft_lstafter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 11:02:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 18:14:02 by hmuravch         ###   ########.fr       */
+/*   Created: 2018/09/15 07:09:59 by hmuravch          #+#    #+#             */
+/*   Updated: 2018/10/17 05:50:09 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "libft.h"
 
-int			main(int argc, char **argv)
+void	ft_lstafter(t_list *alst, t_list *new)
 {
-	t_cw	*cw;
-
-	if (argc >= 2)
+	if (alst && new)
 	{
-		cw = initializer_cw();
-		parse_flags(argc--, argv++, cw);
-        // init_players();
-		// fill_map();
-		start_game(cw);
-
+		while (alst->next)
+			alst = alst->next;
+		alst->next = new;
 	}
-	else
-		ft_printf("ERROR: No arguments");
-	return (0);
 }

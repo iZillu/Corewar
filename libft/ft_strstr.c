@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 11:02:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 18:14:02 by hmuravch         ###   ########.fr       */
+/*   Created: 2018/03/29 18:36:06 by hmuravch          #+#    #+#             */
+/*   Updated: 2018/09/16 03:29:12 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
-
-int			main(int argc, char **argv)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	t_cw	*cw;
+	int i;
+	int z;
+	int search;
 
-	if (argc >= 2)
+	i = 0;
+	if (*needle == '\0')
+		return ((char *)(haystack));
+	while (haystack[i] != '\0')
 	{
-		cw = initializer_cw();
-		parse_flags(argc--, argv++, cw);
-        // init_players();
-		// fill_map();
-		start_game(cw);
-
+		z = 0;
+		if (haystack[i] == needle[z])
+		{
+			search = i;
+			while (haystack[i] == needle[z] && haystack[i] != '\0')
+			{
+				i++;
+				z++;
+			}
+			if (needle[z] == '\0')
+				return ((char *)(haystack + search));
+			i = search;
+		}
+		i++;
 	}
-	else
-		ft_printf("ERROR: No arguments");
 	return (0);
 }

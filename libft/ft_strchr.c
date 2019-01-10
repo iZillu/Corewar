@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 11:02:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 18:14:02 by hmuravch         ###   ########.fr       */
+/*   Created: 2018/03/27 19:39:41 by hmuravch          #+#    #+#             */
+/*   Updated: 2018/09/16 22:09:06 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "libft.h"
 
-int			main(int argc, char **argv)
+char	*ft_strchr(const char *s, int c)
 {
-	t_cw	*cw;
+	unsigned char	to_find;
 
-	if (argc >= 2)
+	if (s == NULL)
+		return (NULL);
+	to_find = (unsigned char)c;
+	while (*s)
 	{
-		cw = initializer_cw();
-		parse_flags(argc--, argv++, cw);
-        // init_players();
-		// fill_map();
-		start_game(cw);
-
+		if (*s == to_find)
+			return ((char *)s);
+		s++;
 	}
-	else
-		ft_printf("ERROR: No arguments");
-	return (0);
+	if (to_find == '\0')
+		return ((char *)s++);
+	return (NULL);
 }

@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   aff.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 11:02:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 18:14:02 by hmuravch         ###   ########.fr       */
+/*   Created: 2019/01/10 20:52:00 by hmuravch          #+#    #+#             */
+/*   Updated: 2019/01/10 20:57:15 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int			main(int argc, char **argv)
+void		aff(t_vm *vm, t_cursor *cursor)
 {
-	t_cw	*cw;
+	int32_t	r_id;
+	int32_t	value;
 
-	if (argc >= 2)
+	cursor->step += (OP_CODE_LEN + ARGS_CODE_LEN);
+	r_id = get_byte(vm, cursor->pc, cursor->step);
+	value = cursor->reg[INDEX(r_id)];
+	cursor->step += REG_LEN;
+	if (vm->display_aff)
+		ft_printf("Aff: %c\n", (char)value);
+	if (vm->vs)
 	{
-		cw = initializer_cw();
-		parse_flags(argc--, argv++, cw);
-        // init_players();
-		// fill_map();
-		start_game(cw);
-
+		vm->vs->aff_symbol = (char)value;
+		vm->vs->aff_player = cursor->player;
 	}
-	else
-		ft_printf("ERROR: No arguments");
-	return (0);
 }

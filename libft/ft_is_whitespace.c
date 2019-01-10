@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   ft_is_whitespace.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 11:02:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 18:14:02 by hmuravch         ###   ########.fr       */
+/*   Created: 2018/08/20 04:26:35 by hmuravch          #+#    #+#             */
+/*   Updated: 2018/08/20 04:59:35 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "libft.h"
 
-int			main(int argc, char **argv)
+int						ft_is_whitespace(int c)
 {
-	t_cw	*cw;
-
-	if (argc >= 2)
-	{
-		cw = initializer_cw();
-		parse_flags(argc--, argv++, cw);
-        // init_players();
-		// fill_map();
-		start_game(cw);
-
-	}
-	else
-		ft_printf("ERROR: No arguments");
-	return (0);
+	return (ft_strchr("\t\n\v\f\r ", c) ? true : false);
 }

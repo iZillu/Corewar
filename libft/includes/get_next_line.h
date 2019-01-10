@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 11:02:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 18:14:02 by hmuravch         ###   ########.fr       */
+/*   Created: 2018/06/03 05:09:41 by hmuravch          #+#    #+#             */
+/*   Updated: 2018/10/17 09:17:54 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# include <sys/types.h>
+# include <sys/uio.h>
+# define BUFF_SIZE 64
 
-int			main(int argc, char **argv)
+typedef	struct		s_gnl
 {
-	t_cw	*cw;
+	char			*arr;
+	int				fd;
+	struct s_gnl	*next;
+}					t_gnl;
 
-	if (argc >= 2)
-	{
-		cw = initializer_cw();
-		parse_flags(argc--, argv++, cw);
-        // init_players();
-		// fill_map();
-		start_game(cw);
+int					get_next_line(const int fd, char **line);
 
-	}
-	else
-		ft_printf("ERROR: No arguments");
-	return (0);
-}
+#endif

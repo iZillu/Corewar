@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmuravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 11:02:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 18:14:02 by hmuravch         ###   ########.fr       */
+/*   Created: 2018/04/18 16:40:41 by hmuravch          #+#    #+#             */
+/*   Updated: 2018/04/18 16:41:13 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
-
-int			main(int argc, char **argv)
+int	ft_sqrt(int nb)
 {
-	t_cw	*cw;
+	int i;
+	int odd;
 
-	if (argc >= 2)
+	i = 0;
+	odd = 1;
+	while (nb > 0)
 	{
-		cw = initializer_cw();
-		parse_flags(argc--, argv++, cw);
-        // init_players();
-		// fill_map();
-		start_game(cw);
-
+		nb -= odd;
+		odd += 2;
+		i++;
 	}
+	if (nb == 0)
+		return (i);
 	else
-		ft_printf("ERROR: No arguments");
-	return (0);
+		return (0);
 }

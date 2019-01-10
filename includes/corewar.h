@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 09:23:30 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/09 16:33:36 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/01/10 20:51:34 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft.h"
 # include "op.h"
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct			s_player
 {
@@ -34,7 +35,7 @@ typedef struct			s_player
 
 typedef	struct			s_coach
 {
-	char				op_hash;
+	char				op_id;
 	unsigned int		carry : 1;
 	unsigned int		id;
 	unsigned int		step; 				// number of bytes to shift
@@ -47,6 +48,20 @@ typedef	struct			s_coach
 	struct	s_coach		*next;
 
 }						t_coach;
+
+struct					s_operations
+{
+	char				*name;
+	unsigned char		amt_arg;
+	unsigned char		args[3];
+	unsigned char		op_id;
+	unsigned int		cycles;
+	char				*description;
+	bool				octal;
+	bool				label;
+	void				(*func)(t_coach *, t_cw *);
+}						t_op;
+
 
 typedef struct			s_cw
 {
