@@ -5,31 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/10 20:55:17 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 20:57:51 by hmuravch         ###   ########.fr       */
+/*   Created: 2019/01/15 20:11:06 by hmuravch          #+#    #+#             */
+/*   Updated: 2019/01/15 21:02:23 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-inline static void	log_fork(t_cursor *cursor, int32_t addr)
+void		fork(t_cw *cw, t_coach *coach, t_op *op)
 {
-	ft_printf("P %4d | fork %d (%d)\n",
-										cursor->id,
-										addr,
-										cursor->pc + addr % IDX_MOD);
-}
+    int		shift;
+    t_coach	*new_coach;
 
-void				fork(t_vm *vm, t_cursor *cursor)
-{
-	int32_t			addr;
-	t_cursor		*new;
-
-	cursor->step += OP_CODE_LEN;
-	addr = get_op_arg(vm, cursor, 1, true);
-	new = duplicate_cursor(cursor, addr % IDX_MOD);
-	add_cursor(&(vm->cursors), new);
-	vm->cursors_num++;
-	if (vm->log & OP_LOG)
-		log_fork(cursor, addr);
+	coach->shift++;
+	shift = parse_args(cw, coach, 1, op);
+	new_coach = clone_coach(coach, shift % IDX_MOD);
+	add_coach(&(cw->coach), new_coach);
+	cw->amt_coaches++;
 }

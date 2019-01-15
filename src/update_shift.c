@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lfork.c                                            :+:      :+:    :+:   */
+/*   update_shift.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/10 20:55:01 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 20:58:23 by hmuravch         ###   ########.fr       */
+/*   Created: 2019/01/14 18:37:25 by hmuravch          #+#    #+#             */
+/*   Updated: 2019/01/14 22:29:27 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-inline static void	log_lfork(t_cursor *cursor, int32_t addr)
+int					shift_size(char arg_type, t_op *op)
 {
-	ft_printf("P %4d | lfork %d (%d)\n", cursor->id, addr, cursor->pc + addr);
+	if (arg_type == T_REG)
+		return (1);
+	else if (arg_type == T_DIR)
+		return (op->label_size);
+	else if (arg_type == T_IND)
+		return (2);
+	return (0);
 }
 
-void				lfork(t_vm *vm, t_cursor *cursor)
+unsigned int		update_shift(t_coach *coach, t_op *op)
 {
-	int32_t			addr;
-	t_cursor		*new;
+	int				i;
+	unsigned int	shift;
 
-	cursor->step += OP_CODE_LEN;
-	addr = get_op_arg(vm, cursor, 1, true);
-	new = duplicate_cursor(cursor, addr);
-	add_cursor(&(vm->cursors), new);
-	vm->cursors_num++;
-	if (vm->log & OP_LOG)
-		log_lfork(cursor, addr);
+	i = -1;
+	shift = 1 + (op->codage ? 1 : 0);
+	while (++i < op->amt_args)
+		shift += shift_size(coach->arg_type[i], op);
+	return (shift);
 }

@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 09:23:30 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 20:51:34 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/01/15 20:42:34 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef	struct			s_coach
 	char				op_id;
 	unsigned int		carry : 1;
 	unsigned int		id;
-	unsigned int		step; 				// number of bytes to shift
+	unsigned int		shift; 				// number of bytes to shift
 	unsigned int		cycles_to_wait;
 	ssize_t				last_live;			// cycle's number when live operator was executed last time
-	char				arg_type[3];		// types of op's each argument before operator execution
+	char				arg_type[4];		// types of op's each argument before operator execution
 	int					pc;					// address of the next operator to execute at memory (change name of var)
-	int					reg[REG_NUMBER];
+	int					reg[17];
 	t_player			*player;			// owner
 	struct	s_coach		*next;
 
@@ -52,14 +52,14 @@ typedef	struct			s_coach
 struct					s_operations
 {
 	char				*name;
-	unsigned char		amt_arg;
+	unsigned char		amt_args;
 	unsigned char		args[3];
 	unsigned char		op_id;
 	unsigned int		cycles;
 	char				*description;
-	bool				octal;
-	bool				label;
-	void				(*func)(t_coach *, t_cw *);
+	bool				codage;
+	bool				label_size;
+	void				(*func)(t_cw *, t_coach *, t_op *);
 }						t_op;
 
 
@@ -75,12 +75,20 @@ typedef struct			s_cw
 	ssize_t				cycles_to_die;		// game param
 	ssize_t				cycles_after_check;	// number of cycles that was passed after last rules check
 	size_t				checks_num;			// game param
+	bool				print_aff;
 
 }						t_cw;
 
 void					abort(char *s);
 void                    print_help(void);
 void					parse_flags(int	argc, char **argv, t_cw *cw);
+void					parse_types(t_cw *cw, t_coach *coach, t_op *op);
+int						shift_size(char arg_type, t_op *op);
+int						validate_arg_types(t_coach *coach, t_op *op);
+int 	                validate_args(t_coach *coach, t_cw *cw, t_op *op)
+int						parse_args(t_cw *cw, t_coach *coach, int num, t_op *op);
+unsigned int			update_shift(t_coach *coach, t_op *op);
 t_cw					*initializer_cw(void);
+t_coach					*clone_coach(t_coach *crnt_coach, int shift)
 
 #endif
