@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add.c                                              :+:      :+:    :+:   */
+/*   lfork.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/10 20:32:49 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/15 23:55:57 by hmuravch         ###   ########.fr       */
+/*   Created: 2019/01/16 00:04:43 by hmuravch          #+#    #+#             */
+/*   Updated: 2019/01/16 00:07:12 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	add(t_cw *cw, t_coach *coach, t_op *op)
+void		lfork(t_cw *cw, t_coach *coach, t_op *op)
 {
-	int	id_1;
-	int	id_2;
-	int	id_3;
+	int		shift;
+    t_coach	*new_coach;
 
-	coach->shift += 2;
-	id_1 = cw->map[(coach->pc + coach->shift) % MEM_SIZE]
 	coach->shift++;
-	id_2 = cw->map[(coach->pc + coach->shift) % MEM_SIZE]
-	coach->shift++;
-	id_3 = cw->map[(coach->pc + coach->shift) % MEM_SIZE]
-	coach->reg[id_3] = coach->reg[id_1] + coach->reg[id_2];
-	coach->carry = coach->reg[id_3] ? false : true;
-	coach->shift++;
+	shift = parse_args(cw, coach, 1, op);
+	new_coach = clone_coach(coach, shift % IDX_MOD);
+	add_coach(&(cw->coach), new_coach);
+	cw->amt_coaches++;
 }

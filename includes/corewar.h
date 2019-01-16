@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 09:23:30 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/15 20:42:34 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/01/16 07:24:55 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+# define CONVERT(X) (((X) < 0) ? (-(X)) : (X))
+
 typedef struct			s_player
 {
 	int					id;
@@ -26,8 +28,8 @@ typedef struct			s_player
 	char				*name;
 	char				*comment;
 	char				*code;
-	size_t				current_num_lives;	// number of reports that player is alive during current cycles_to_die period
-	size_t				previous_num_lives; // number of reports that player is alive during previous cycles_to_die period
+	size_t				current_amt_lives;	// number of reports that player is alive during current cycles_to_die period
+	size_t				previous_amt_lives; // number of reports that player is alive during previous cycles_to_die period
 	ssize_t				last_live;			// cycle's number, on which player was assigned as alive last time
 	struct	s_player	*next;
 
@@ -70,11 +72,12 @@ typedef struct			s_cw
 	size_t				amt_players;
 	t_player			*last_player;
 	t_coach				*coach;
+	size_t				amt_lives;
 	size_t				amt_coaches;
 	ssize_t				cycles;				// number of cycles that was passed after start
 	ssize_t				cycles_to_die;		// game param
 	ssize_t				cycles_after_check;	// number of cycles that was passed after last rules check
-	size_t				checks_num;			// game param
+	size_t				amt_checks;			// game param
 	bool				print_aff;
 
 }						t_cw;
@@ -90,5 +93,30 @@ int						parse_args(t_cw *cw, t_coach *coach, int num, t_op *op);
 unsigned int			update_shift(t_coach *coach, t_op *op);
 t_cw					*initializer_cw(void);
 t_coach					*clone_coach(t_coach *crnt_coach, int shift)
+
+/*
+**						OPERATIONS
+*/
+
+void					add(t_cw *cw, t_coach *coach, t_op *op);
+void					aff(t_cw *cw, t_coach *coach, t_op *op);
+void					and(t_cw *cw, t_coach *coach, t_op *op);
+void					fork(t_cw *cw, t_coach *coach, t_op *op);
+void					ld(t_cw *cw, t_coach *coach, t_op *op);
+void					ldi(t_cw *cw, t_coach *coach, t_op *op);
+void					lfork(t_cw *cw, t_coach *coach, t_op *op);
+void			    	live(t_cw *cw, t_coach *coach, t_op *op);
+void					lld(t_cw *cw, t_coach *coach, t_op *op);
+void					lldi(t_cw *cw, t_coach *coach, t_op *op);
+void					or(t_cw *cw, t_coach *coach, t_op *op);
+void					st(t_cw *cw, t_coach *coach, t_op *op);
+void					sti(t_cw *cw, t_coach *coach, t_op *op);
+void					sub(t_cw *cw, t_coach *coach, t_op *op);
+void					xor(t_cw *cw, t_coach *coach, t_op *op);
+void					zjmp(t_cw *cw, t_coach *coach, t_op *op);
+
+/*
+**						END
+*/
 
 #endif
