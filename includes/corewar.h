@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 09:23:30 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/16 07:24:55 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/01/16 18:46:17 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,11 @@ void					abort(char *s);
 void                    print_help(void);
 void					parse_flags(int	argc, char **argv, t_cw *cw);
 void					parse_types(t_cw *cw, t_coach *coach, t_op *op);
+void					convert_integer(char *map, int position, int value, int size);
+int						convert_bytecode(const char *map, int size, int position);
 int						shift_size(char arg_type, t_op *op);
 int						validate_arg_types(t_coach *coach, t_op *op);
-int 	                validate_args(t_coach *coach, t_cw *cw, t_op *op)
+int 	                validate_args(t_coach *coach, t_cw *cw, t_op *op);
 int						parse_args(t_cw *cw, t_coach *coach, int num, t_op *op);
 unsigned int			update_shift(t_coach *coach, t_op *op);
 t_cw					*initializer_cw(void);

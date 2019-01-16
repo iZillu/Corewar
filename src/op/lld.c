@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ld.c                                               :+:      :+:    :+:   */
+/*   lld.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/15 21:03:06 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/16 13:34:04 by hmuravch         ###   ########.fr       */
+/*   Created: 2019/01/16 09:47:39 by hmuravch          #+#    #+#             */
+/*   Updated: 2019/01/16 15:06:04 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	ld(t_cw *cw, t_coach *coach, t_op *op)
+void	lld(t_cw *cw, t_coach *coach, t_op *op)
 {
-	int	id;
+    int	id;
 	int	res;
 
 	coach->shift += 2;

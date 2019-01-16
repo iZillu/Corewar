@@ -6,13 +6,13 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 21:04:55 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/16 07:25:19 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:28:13 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-t_coach				*clone_coach(t_coach *crnt_coach, int shift)
+t_coach		*clone_coach(t_coach *crnt_coach, int shift)
 {
 	int		i;
 	t_coach	*new_coach;
@@ -27,7 +27,7 @@ t_coach				*clone_coach(t_coach *crnt_coach, int shift)
 	return (new_coach);
 }
 
-static inline int	read_bytecode(t_cw *cw, int size, int position)
+int			convert_bytecode(const char *map, int size, int position)
 {
 	int		i;
 	int		res;
@@ -35,13 +35,13 @@ static inline int	read_bytecode(t_cw *cw, int size, int position)
 
 	i = 0;
 	res = 0;
-	minus = (cw->map[(position) % MEM_SIZE] & 128) ? true : false ;
+	minus = (map[(position) % MEM_SIZE] & 128) ? true : false ;
 	while (size)
 	{
 		if (minus)
-			res += ((cw->map[(position + size - 1) % MEM_SIZE] ^ 255) << (i * 8));
+			res += ((map[(position + size - 1) % MEM_SIZE] ^ 255) << (i * 8));
 		else
-			res += cw->map[(position + size - 1) % MEM_SIZE] << (i * 8);
+			res += map[(position + size - 1) % MEM_SIZE] << (i * 8);
 		i++;
 		size--;
 	}
@@ -50,7 +50,20 @@ static inline int	read_bytecode(t_cw *cw, int size, int position)
 	return (res);
 }
 
-int					parse_args(t_cw *cw, t_coach *coach, int num, t_op *op)
+void		convert_integer(char *map, int position, int value, int size)
+{
+	int		i;
+
+	i = 0;
+	while (size)
+	{
+		map[(position + size - 1) % 255] = (char)((value >> i) & 255);
+		i += 8;
+		size--;
+	}
+}
+
+int			parse_args(t_cw *cw, t_coach *coach, int num, t_op *op)
 {
 	int		id;
 	int		res;
@@ -61,13 +74,13 @@ int					parse_args(t_cw *cw, t_coach *coach, int num, t_op *op)
 	if (coach->arg_type[num] == T_REG)
 		res = coach->reg[id];
 	else if (coach->arg_type[num] == T_DIR)
-		res = read_bytecode(cw, op->label_size, coach->pc + coach->shift);
+		res = convert_bytecode(cw->map, op->label_size, coach->pc + coach->shift);
 	else if (coach->arg_type[num] == T_IND)
 	{
-		position = read_bytecode(cw, IND_SIZE, coach->pc + coach->shift);
+		position = convert_bytecode(cw->map, IND_SIZE, coach->pc + coach->shift);
 		if (coach->op_id != 1 && coach->op_id != 13)
 			position = position % IDX_MOD;
-		res = read_bytecode(cw, DIR_SIZE, coach->pc + position);
+		res = convert_bytecode(cw->map, DIR_SIZE, coach->pc + position);
 	}
 	coach->shift += shift_size(coach->arg_type[num], op);
 	return (res);
