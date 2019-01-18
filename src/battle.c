@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 18:15:32 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/16 01:34:29 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/01/18 16:04:56 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ static const t_op	op_tab[17] =
 	{"aff", 1, {T_REG}, 16, 2, "aff", 1, 4, &aff}
 };
 
+static inline void	move_coach(t_cw *cw, t_coach *coach)
+{
+	coach->pc = (coach->pc + coach->shift) % MEM_SIZE;
+	coach->shift = 0;
+	ft_bzero(coach->arg_type, 3);
+}
+
 static inline void	parse_op_id(t_cw *cw, t_coach *coach)
 {
 	coach->op_id = cw->map[coach->pc]
@@ -46,7 +53,7 @@ static inline void	parse_op_id(t_cw *cw, t_coach *coach)
 		coach->cycles_to_wait = op_tab[coach->op_id].cycles;
 }
 
-static inline void	process_operations(t_coach *coach, t_cw *cw)
+static inline void	execute_operation(t_coach *coach, t_cw *cw)
 {
 	t_op			*op;
 
@@ -59,14 +66,16 @@ static inline void	process_operations(t_coach *coach, t_cw *cw)
 			op = &op_tab[coach->op_id]
 			parse_types(coach, cw, op);
 			if (validate_arg_types(coach, op) && validate_args(coach. cw, op)
-				op->func(cw, coach);
+				op->func(cw, coach, op);
 			else
 				coach->shift += update_shift(coach, op);
 		}
+		else
+			coach->shift = 1;
+		move_coach(cw, coach);
 	}
 	else
 		coach->cycles_to_wait--;
-	
 }
 
 void		start_game(t_cw *cw)
@@ -80,11 +89,14 @@ void		start_game(t_cw *cw)
 		// 	print_map()
 		// 	exit(0);
 		// }
+		cw->cycles++ && cw->cycles_after_check++;
 		crnt_coach = cw->coach;
 		while (crnt_coach)
 		{
-			process_operations(crnt_coach, cw);
+			execute_operation(crnt_coach, cw);
 			crnt_coach = crnt_coach->next;
 		}
+		if (cw->cycles_to_die == cw->cycles_after_check || cw->cycles_to_die <= 0)
+			check_cycles_to_die(cw);
 	}
 }

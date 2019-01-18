@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 21:04:55 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/16 16:28:13 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/01/18 15:54:49 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_coach		*clone_coach(t_coach *crnt_coach, int shift)
 	while (++i < REG_NUMBER)
 		new_coach->reg[i] = crnt_coach->reg[i];
 	new_coach->carry = crnt_coach->carry;
-	new_coach->last_live = crnt_coach->last_live;
+	new_coach->last_cycle_check = crnt_coach->last_cycle_check;
 	return (new_coach);
 }
 

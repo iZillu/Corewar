@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 09:23:30 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/16 18:46:17 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/01/18 16:21:48 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct			s_player
 	char				*code;
 	size_t				current_amt_lives;	// number of reports that player is alive during current cycles_to_die period
 	size_t				previous_amt_lives; // number of reports that player is alive during previous cycles_to_die period
-	ssize_t				last_live;			// cycle's number, on which player was assigned as alive last time
+	ssize_t				last_cycle_check;			// cycle's number, on which player was assigned as alive last time
 	struct	s_player	*next;
 
 }						t_player;
@@ -42,7 +42,7 @@ typedef	struct			s_coach
 	unsigned int		id;
 	unsigned int		shift; 				// number of bytes to shift
 	unsigned int		cycles_to_wait;
-	ssize_t				last_live;			// cycle's number when live operator was executed last time
+	ssize_t				last_cycle_check;			// cycle's number when live operator was executed last time
 	char				arg_type[4];		// types of op's each argument before operator execution
 	int					pc;					// address of the next operator to execute at memory (change name of var)
 	int					reg[17];
@@ -75,6 +75,7 @@ typedef struct			s_cw
 	size_t				amt_lives;
 	size_t				amt_coaches;
 	ssize_t				cycles;				// number of cycles that was passed after start
+	size_t				prev_cycles_alive;
 	ssize_t				cycles_to_die;		// game param
 	ssize_t				cycles_after_check;	// number of cycles that was passed after last rules check
 	size_t				amt_checks;			// game param
@@ -84,6 +85,7 @@ typedef struct			s_cw
 
 void					abort(char *s);
 void                    print_help(void);
+void					check_cycles_to_die(t_cw *cw);
 void					parse_flags(int	argc, char **argv, t_cw *cw);
 void					parse_types(t_cw *cw, t_coach *coach, t_op *op);
 void					convert_integer(char *map, int position, int value, int size);

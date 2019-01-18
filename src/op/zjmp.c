@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   live.c                                             :+:      :+:    :+:   */
+/*   zjmp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/16 01:19:32 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/18 15:54:49 by hmuravch         ###   ########.fr       */
+/*   Created: 2019/01/18 10:02:33 by hmuravch          #+#    #+#             */
+/*   Updated: 2019/01/18 11:31:57 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void			live(t_cw *cw, t_coach *coach, t_op *op)
+void	zjmp(t_cw *cw, t_coach *coach, t_op *op)
 {
-	int			id;
-	t_player	*player;
+	int	position;
 
 	coach->shift++;
-	player = NULL
-	id = parse_args(cw, coach, 1, op);
-	cw->amt_lives++;
-	coach->last_cycle_check = cw->cycles;
-	if (id >= -1 && id <= -((int)cw->amt_players))
+	position = parse_args(cw, coach, 1, op);
+	if (coach->carry)
 	{
-		player = cw->player[CONVERT(id - 1)];
-		player->last_cycle_check = cw->cycles;
-		player->current_amt_lives++;
-		cw->last_player = player;
+		coach->pc = coach->pc + (position % IDX_MOD);
+		coach->shift = 0;
 	}
 }
