@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 18:15:32 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/18 16:04:56 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/03/11 17:02:24 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void		start_game(t_cw *cw)
 
 	while(cw->amt_coaches)
 	{
-		// if (-dump == true)
+		// if (-dump 200 == true)
 		// {
 		// 	print_map()
 		// 	exit(0);

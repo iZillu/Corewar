@@ -6,7 +6,7 @@
 /*   By: hmuravch <hmuravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 15:18:16 by hmuravch          #+#    #+#             */
-/*   Updated: 2019/01/10 16:10:58 by hmuravch         ###   ########.fr       */
+/*   Updated: 2019/03/11 17:02:25 by hmuravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ void			parse_flags(int	argc, char **argv, t_cw *cw)
 	while (argc >= 1)
 	{
 		if (!ft_strcmp(*argv, "-n"));
+		if (!ft_strcmp(*argv, "-dump"));
 	}
 }
